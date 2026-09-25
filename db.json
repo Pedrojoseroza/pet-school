@@ -1,23 +1,11 @@
+
 {
   "tutores": [
-    {
-      "id":"1", "nome": "Pedro Gabriel", "telefone": "47992085724"
-    },
-    {
-      "id":"2", "nome": "Kaue Tixeira", "telefone": "47988888"
-    },
-    {
-      "id":"3", "nome": "Gamaliel T. R. M", "telefone": "47977777"
-    },
-        {
-      "id":"4", "nome": "Rafael Bonkoski", "telefone": "47966666"
-    },    {
-      "id":"5", "nome": "Livia Bitelbrumm", "telefone": "479555555"
-    }
+    { "id": "1", "nome": "Ana", "telefone": "47999990000" },
+    { "id": "2", "nome": "Carlos", "telefone": "47988880000" }
   ],
   "pets": [
-    {
-      "id": "1", "nome_pet": "Tufão", "tutorId": "1"
-    }
+    { "id": "1", "nome": "Safira", "especie": "Cachorro", "tutorId": "1" },
+    { "id": "2", "nome": "Nino", "especie": "Gato", "tutorId": "1" }
   ]
 }

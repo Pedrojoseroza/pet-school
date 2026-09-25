@@ -1,20 +1,32 @@
 <script setup>
-import AppSideBar from '@/components/layout/AppSideBar.vue';
-import AppNavBar from '@/components/layout/AppNavBar.vue';
 import { RouterView } from 'vue-router';
+import AppNavBar from './AppNavBar.vue';
+import AppSideBar from './AppSideBar.vue';
 </script>
 
 <template>
-    <AppNavBar/>
+  <AppNavBar />
+
   <div class="container-fluid">
     <div class="row">
-      <aside class="col-md-3">
-        
+      <aside class="col-md-3 col-lg-2 bg-body-tertiary border-end p-3 sidebar">
+        <AppSideBar />
       </aside>
+
+      <main
+        id="conteudo"
+        class="col-md-9 col-lg-10 px-3 px-md-4 py-4"
+      >
+        <RouterView />
+      </main>
     </div>
   </div>
 </template>
 
 <style scoped>
-
+@media (min-width: 768px) {
+  .sidebar {
+    min-height: calc(100vh - 56px);
+  }
+}
 </style>
