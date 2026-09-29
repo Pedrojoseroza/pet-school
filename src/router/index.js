@@ -5,17 +5,17 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/pets'
+      redirect: '/pets',
     },
     {
       path: '/pets',
       name: 'Pets',
-      component: () => import('../views/PetsView.vue')
+      component: () => import('../views/PetsView.vue'),
     },
     {
       path: '/pets/novo',
       name: 'addPet',
-      component: () => import('../views/AddPetView.vue')
+      component: () => import('../views/AddPetView.vue'),
     },
   ],
 });

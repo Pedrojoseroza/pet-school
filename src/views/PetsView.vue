@@ -1,28 +1,58 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+
 const API_URL = 'http://localhost:3000';
+
 const pets = ref([]);
 const tutores = ref([]);
-const loading = ref(true);
+const carregando = ref(true);
+const erro = ref('');
 
-async function carregarDados() {
-  const respostaPet = await fetch(`${API_URL}/pets`);
-  pets.value = await respostaPet.json();
+async function carregarPets() {
+  try {
+    const resposta = await fetch(`${API_URL}/pets`);
 
-  const respostaTutores = await fetch(`${API_URL}/tutores`);
-  tutores.value = await respostaTutores.json();
-  loading.value = false;
-  }
-   const getTutor = (id) => {
-    const tutor = tutores.value.find(e => e.id == id);
-    console.log(tutor);
-    if (tutor === '') {
-      return "Deu B.O!";
+    if (!resposta.ok) {
+      throw new Error(`O servidor respondeu com o status ${resposta.status}.`);
     }
-    return tutor.nome;
+
+    pets.value = await resposta.json();
+  } catch (falha) {
+    erro.value = 'Não foi possível carregar os pets. Tente novamente.';
+    console.error(falha);
+  } finally {
+    carregando.value = false;
   }
-onMounted(carregarDados);
+}
+
+async function carregarTutores() {
+  try {
+    const resposta = await fetch(`${API_URL}/tutores`);
+
+    if (!resposta.ok) {
+      throw new Error(`O servidor respondeu com o status ${resposta.status}.`);
+    }
+
+    tutores.value = await resposta.json();
+  } catch (falha) {
+    console.error(falha);
+  }
+}
+
+function nomeDoTutor(tutorId) {
+  const tutor = tutores.value.find(
+    (item) => String(item.id) === String(tutorId),
+  );
+
+  return tutor?.nome ?? 'Sem tutor';
+}
+
+onMounted(() => {
+  carregarPets();
+  carregarTutores();
+});
 </script>
+
 <template>
   <div>
     <header class="mb-4">
@@ -31,42 +61,59 @@ onMounted(carregarDados);
         Listagem dos Pets cadastrados no sistema.
       </p>
     </header>
+
     <main>
-      <div class="container-fluid">
+      <p
+        v-if="carregando"
+        class="text-body-secondary"
+        role="status"
+      >
+        Carregando pets...
+      </p>
+
+      <div
+        v-else-if="erro"
+        class="alert alert-danger"
+        role="alert"
+      >
+        {{ erro }}
+      </div>
+
+      <p
+        v-else-if="pets.length === 0"
+        class="text-body-secondary"
+      >
+        Nenhum pet cadastrado.
+      </p>
+
+      <div
+        v-else
+        class="container-fluid"
+      >
         <table class="table table-striped table-hover">
           <thead>
             <tr>
-              <th>
-              Identificador
-            </th>
-            <th>
-              Nome
-            </th>
-            <th>
-              Espécie
-            </th>
-            <th>
-              Tutor
-            </th>
+              <th>Identificador</th>
+              <th>Nome</th>
+              <th>Espécie</th>
+              <th>Tutor</th>
             </tr>
           </thead>
-          <tr v-for="pet in pets">
-            <td>
-              {{ pet.id }}
-            </td>
-            <td>
-              {{ pet.nome }}
-            </td>
-            <td>
-              {{ pet.especie }}
-            </td>
-            <td>
-              {{ getTutor(pet.tutorId)}}
-            </td>
-          </tr>
+          <tbody>
+            <tr
+              v-for="pet in pets"
+              :key="pet.id"
+            >
+              <td>{{ pet.id }}</td>
+              <td>{{ pet.nome }}</td>
+              <td>{{ pet.especie }}</td>
+              <td>{{ nomeDoTutor(pet.tutorId) }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </main>
+
     <RouterLink
       class="btn btn-primary"
       :to="{ name: 'addPet' }"
