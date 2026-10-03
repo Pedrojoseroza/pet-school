@@ -9,13 +9,18 @@ const router = createRouter({
     },
     {
       path: '/pets',
-      name: 'Pets',
+      name: 'pets',
       component: () => import('../views/PetsView.vue'),
     },
     {
       path: '/pets/novo',
       name: 'addPet',
       component: () => import('../views/AddPetView.vue'),
+    },
+    {
+      path: '/pets/:id',
+      name: 'detalhes-pet',
+      component: () => import('../views/PetDetailsView.vue'),
     },
   ],
 });
