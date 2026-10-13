@@ -44,13 +44,9 @@ onMounted(carregarTutores);
           <td>{{ tutor.id }}</td>
           <td>{{ tutor.nome }}</td>
           <td>{{ tutor.telefone }}</td>
-          <td class="d-flex  align-items-center">
-            <RouterLink :to="`/tutores/${tutor.id}`">
-              Visualizar
-            </RouterLink>
-            <button class="btn btn-danger ms-3 p-1">
-              Deletar
-            </button>
+          <td class="d-flex align-items-center">
+            <RouterLink :to="`/tutores/${tutor.id}`"> Visualizar </RouterLink>
+            <button class="btn btn-danger ms-3 p-1">Deletar</button>
           </td>
         </tr>
       </tbody>
@@ -58,6 +54,4 @@ onMounted(carregarTutores);
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

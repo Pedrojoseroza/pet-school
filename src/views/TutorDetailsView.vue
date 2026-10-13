@@ -15,7 +15,7 @@ async function carregarTutorDetails() {
 
   const respostaPet = await fetch(`${API_URL}/pets`);
   pets.value = await respostaPet.json();
-  pets.value = pets.value.filter(e=> e.tutorId === tutorId);
+  pets.value = pets.value.filter((e) => e.tutorId === tutorId);
 }
 
 onMounted(carregarTutorDetails);
@@ -23,15 +23,19 @@ onMounted(carregarTutorDetails);
 
 <template>
   <div>
-     <h1>Nome do Tutor: {{ tutor.nome }}</h1>
-     <p>Telefone: {{ tutor.telefone }}</p>
-    <p>
-      Pets deste Tutor:
-    </p>
-    <p class="text text-danger" v-if="pets.length == 0">
+    <h1>Nome do Tutor: {{ tutor.nome }}</h1>
+    <p>Telefone: {{ tutor.telefone }}</p>
+    <p>Pets deste Tutor:</p>
+    <p
+      class="text text-danger"
+      v-if="pets.length == 0"
+    >
       Este Tutor não possui nenhum pet!
     </p>
-     <table class="table table-striped table-hover" v-else>
+    <table
+      class="table table-striped table-hover"
+      v-else
+    >
       <thead>
         <tr>
           <th>ID</th>
@@ -54,6 +58,4 @@ onMounted(carregarTutorDetails);
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

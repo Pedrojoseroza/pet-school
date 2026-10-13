@@ -45,7 +45,7 @@ onMounted(carregarTutores);
     </header>
 
     <RouterLink
-    @click="salvarPet()"
+      @click="salvarPet()"
       class="btn btn-primary"
       :to="{ name: 'addPet' }"
     >

@@ -29,7 +29,8 @@ import { RouterLink } from 'vue-router';
         Novo pet
       </RouterLink>
 
-      <RouterLink to="/tutores"
+      <RouterLink
+        to="/tutores"
         class="nav-link text-body-secondary"
         aria-disabled="true"
       >
@@ -38,7 +39,7 @@ import { RouterLink } from 'vue-router';
           aria-hidden="true"
         ></i>
         Tutores
-      </RouterLink >
+      </RouterLink>
     </div>
   </nav>
 </template>
