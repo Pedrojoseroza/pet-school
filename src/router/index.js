@@ -35,7 +35,7 @@ const router = createRouter({
     {
       path: '/tutores/novo',
       name: 'addTutor',
-      component: () => import('../views/AddPetView.vue'),
+      component: () => import('../views/AddTutorView.vue'),
     },
   ],
 });

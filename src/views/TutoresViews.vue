@@ -8,6 +8,18 @@ async function carregarTutores() {
   const respostaTutores = await fetch(`${API_URL}/tutores`);
   tutores.value = await respostaTutores.json();
 }
+
+
+async function excluirTutor(id) {
+  const certezaExclusao = window.confirm('Deseja realmente excluir o tutor?');
+  if (certezaExclusao) {
+    await fetch(`${API_URL}/tutores/${id}`, {
+      method: 'DELETE',
+    });
+  }
+  await carregarTutores(); //Carrega os dados após a exclusão
+}
+
 onMounted(carregarTutores);
 </script>
 
@@ -46,7 +58,7 @@ onMounted(carregarTutores);
           <td>{{ tutor.telefone }}</td>
           <td class="d-flex align-items-center">
             <RouterLink :to="`/tutores/${tutor.id}`"> Visualizar </RouterLink>
-            <button class="btn btn-danger ms-3 p-1">Deletar</button>
+            <button class="btn btn-danger ms-3 p-1" @click="excluirTutor(tutor.id)">Deletar</button>
           </td>
         </tr>
       </tbody>
