@@ -21,6 +21,7 @@ async function excluirTutor(id) {
 }
 
 onMounted(carregarTutores);
+
 </script>
 
 <template>
@@ -53,11 +54,23 @@ onMounted(carregarTutores);
           v-for="tutor in tutores"
           :key="tutor.id"
         >
-          <td>{{ tutor.id }}</td>
-          <td>{{ tutor.nome }}</td>
-          <td>{{ tutor.telefone }}</td>
+          <td>
+            {{ tutor.id }}
+          </td>
+          <td>
+            {{ tutor.nome }}
+          </td>
+          <td>
+            {{ tutor.telefone }}
+          </td>
+          <td>
+            {{tutor.email}}
+          </td>
+          <td>
+            
+          </td>
           <td class="d-flex align-items-center">
-            <RouterLink :to="`/tutores/${tutor.id}`"> Visualizar </RouterLink>
+            <RouterLink :to="`/tutores/${tutor.id}`" class="btn btn-primary"> Visualizar </RouterLink>
             <button class="btn btn-danger ms-3 p-1" @click="excluirTutor(tutor.id)">Deletar</button>
           </td>
         </tr>
