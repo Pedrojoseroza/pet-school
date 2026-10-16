@@ -4,9 +4,19 @@ import { onMounted, ref } from 'vue';
 const API_URL = 'http://localhost:3000';
 
 const tutores = ref([]);
-async function carregarTutores() {
+const pets = ref([]);
+
+async function carregarDados() {
+  const respostaPets = await fetch(`${API_URL}/pets`);
+  pets.value = await respostaPets.json();
+
   const respostaTutores = await fetch(`${API_URL}/tutores`);
   tutores.value = await respostaTutores.json();
+}
+
+const filtraPets = (id) => {
+  const tutorPets = pets.value.filter(e => e.id === id);
+  return tutorPets;
 }
 
 
@@ -17,10 +27,10 @@ async function excluirTutor(id) {
       method: 'DELETE',
     });
   }
-  await carregarTutores(); //Carrega os dados após a exclusão
+  await carregarDados(); //Carrega os dados após a exclusão
 }
 
-onMounted(carregarTutores);
+onMounted(carregarDados());
 
 </script>
 
@@ -46,6 +56,12 @@ onMounted(carregarTutores);
           <th>ID</th>
           <th>Nome</th>
           <th>Número</th>
+          <th>
+            Email
+          </th>
+          <th>
+            Pets
+          </th>
         </tr>
       </thead>
 
@@ -65,6 +81,9 @@ onMounted(carregarTutores);
           </td>
           <td>
             {{tutor.email}}
+          </td>
+          <td>
+            {{ filtraPets(tutor.id) }}
           </td>
           <td>
             
