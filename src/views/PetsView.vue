@@ -1,56 +1,48 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const API_URL = 'http://localhost:3000';
 
 const pets = ref([]);
 const tutores = ref([]);
-const carregando = ref(true);
-const erro = ref('');
 
-async function carregarPets() {
-  try {
-    const resposta = await fetch(`${API_URL}/pets`);
+async function carregarDados() {
+  const respostaPets = await fetch(`${API_URL}/pets`);
+  pets.value = await respostaPets.json();
 
-    if (!resposta.ok) {
-      throw new Error(`O servidor respondeu com o status ${resposta.status}.`);
-    }
+  console.log('Pets:', pets.value);
 
-    pets.value = await resposta.json();
-  } catch (falha) {
-    erro.value = 'Não foi possível carregar os pets. Tente novamente.';
-    console.error(falha);
-  } finally {
-    carregando.value = false;
-  }
-}
+  const respostaTutores = await fetch(`${API_URL}/tutores`);
+  tutores.value = await respostaTutores.json();
 
-async function carregarTutores() {
-  try {
-    const resposta = await fetch(`${API_URL}/tutores`);
-
-    if (!resposta.ok) {
-      throw new Error(`O servidor respondeu com o status ${resposta.status}.`);
-    }
-
-    tutores.value = await resposta.json();
-  } catch (falha) {
-    console.error(falha);
-  }
+  console.log('Tutores:', tutores.value);
 }
 
 function nomeDoTutor(tutorId) {
-  const tutor = tutores.value.find(
-    (item) => String(item.id) === String(tutorId),
-  );
-
-  return tutor?.nome ?? 'Sem tutor';
+  for (const tutor of tutores.value) {
+    console.log('tutor', tutorId);
+    // tutor.id == tutorId
+    if (tutor.id === tutorId) {
+      return tutor.nome;
+    }
+  }
+  return 'Tutor Não Encontrado!';
 }
 
-onMounted(() => {
-  carregarPets();
-  carregarTutores();
-});
+async function excluirPet(id) {
+  const certezaExclusao = window.confirm('Deseja realmente excluir o pet?');
+  if (certezaExclusao) {
+    await fetch(`${API_URL}/pets/${id}`, {
+      method: 'DELETE',
+    });
+  }
+  await carregarDados(); //Carrega os dados após a exclusão
+}
+
+// Recebe o tutorId do pet e procura o tutor correspondente.
+
+onMounted(carregarDados);
 </script>
 
 <template>
@@ -62,63 +54,44 @@ onMounted(() => {
       </p>
     </header>
 
-    <main>
-      <p
-        v-if="carregando"
-        class="text-body-secondary"
-        role="status"
-      >
-        Carregando pets...
-      </p>
-
-      <div
-        v-else-if="erro"
-        class="alert alert-danger"
-        role="alert"
-      >
-        {{ erro }}
-      </div>
-
-      <p
-        v-else-if="pets.length === 0"
-        class="text-body-secondary"
-      >
-        Nenhum pet cadastrado.
-      </p>
-
-      <div
-        v-else
-        class="container-fluid"
-      >
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Identificador</th>
-              <th>Nome</th>
-              <th>Espécie</th>
-              <th>Tutor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="pet in pets"
-              :key="pet.id"
-            >
-              <td>{{ pet.id }}</td>
-              <td>{{ pet.nome }}</td>
-              <td>{{ pet.especie }}</td>
-              <td>{{ nomeDoTutor(pet.tutorId) }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </main>
-
     <RouterLink
       class="btn btn-primary"
       :to="{ name: 'addPet' }"
     >
       Adicionar Pet
     </RouterLink>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Especie</th>
+          <th>Tutor</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          v-for="pet in pets"
+          :key="pet.id"
+        >
+          <td>{{ pet.id }}</td>
+          <td>{{ pet.nome }}</td>
+          <td>{{ pet.especie }}</td>
+          <td>{{ nomeDoTutor(pet.tutorId) }}</td>
+          <td class="d-flex align-items-center">
+            <RouterLink :to="`/pets/${pet.id}`"> Visualizar </RouterLink>
+            <button
+              class="btn btn-danger ms-3 p-1"
+              @click="excluirPet(pet.id)"
+            >
+              Deletar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
