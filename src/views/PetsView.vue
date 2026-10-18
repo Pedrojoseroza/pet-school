@@ -82,9 +82,14 @@ onMounted(carregarDados);
           <td>{{ pet.especie }}</td>
           <td>{{ nomeDoTutor(pet.tutorId) }}</td>
           <td class="d-flex align-items-center">
-            <RouterLink :to="`/pets/${pet.id}`"> Visualizar </RouterLink>
+            <RouterLink
+              :to="`/pets/${pet.id}`"
+              class="btn btn-primary"
+            >
+              Visualizar
+            </RouterLink>
             <button
-              class="btn btn-danger ms-3 p-1"
+              class="btn btn-danger ms-3"
               @click="excluirPet(pet.id)"
             >
               Deletar

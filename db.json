@@ -4,24 +4,22 @@
       "id": "1",
       "nome": "Ana",
       "telefone": "47999990000",
-      "cnpj/cpf": "478.686.870-10",
+      "cnpj_cpf": "478.686.870-10",
       "data": "1944-01-01",
       "email": "ana.hallo@gmail.com",
-      "endereco":
-        {
-          "cep": "87115103",
-          "rua": "Rua 9355",
-          "bairro": "Ecovalley Ecologic City",
-          "cidade": "Sarandi",
-          "estado": "PR"
-        }
-
+      "endereco": {
+        "cep": "87115103",
+        "rua": "Rua 9355",
+        "bairro": "Ecovalley Ecologic City",
+        "cidade": "Sarandi",
+        "estado": "PR"
+      }
     },
     {
       "id": "2",
       "nome": "Carlos",
       "telefone": "47988880000",
-      "cnpj/cpf": "275.425.880-95",
+      "cnpj_cpf": "275.425.880-95",
       "data": "1952-08-26",
       "email": "carlos.hallo@gmail.com",
       "endereco": {
@@ -57,6 +55,12 @@
       "especie": "Gato",
       "tutorId": "zlwKgO5IEXE",
       "id": "suotfyH1WGY"
+    },
+    {
+      "nome": "Miguel",
+      "especie": "Cachorro",
+      "tutorId": "2",
+      "id": "jBuQ8cTeIl4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

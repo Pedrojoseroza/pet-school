@@ -15,10 +15,10 @@ async function carregarDados() {
 }
 
 const filtraPets = (id) => {
-  const tutorPets = pets.value.filter(e => e.id === id);
-  return tutorPets;
-}
-
+  let tutorPets = pets.value.filter((e) => e.tutorId === id);
+  tutorPets = tutorPets.map(e => e.nome);
+  return tutorPets.join(',  ');
+};
 
 async function excluirTutor(id) {
   const certezaExclusao = window.confirm('Deseja realmente excluir o tutor?');
@@ -30,8 +30,15 @@ async function excluirTutor(id) {
   await carregarDados(); //Carrega os dados após a exclusão
 }
 
-onMounted(carregarDados());
+function escondeCPF(cpf){
+  if (cpf.length == 14) {
+    return '***.***.***-**'
+  } else {
+    return '**.***.***/****-**'
+  }
+}
 
+onMounted(carregarDados);
 </script>
 
 <template>
@@ -55,13 +62,11 @@ onMounted(carregarDados());
         <tr>
           <th>ID</th>
           <th>Nome</th>
+          <th>CPF/CNPJ</th>
           <th>Número</th>
-          <th>
-            Email
-          </th>
-          <th>
-            Pets
-          </th>
+          <th>Email</th>
+          <th>Pets</th>
+          <th>Ações</th>
         </tr>
       </thead>
 
@@ -77,20 +82,30 @@ onMounted(carregarDados());
             {{ tutor.nome }}
           </td>
           <td>
+            {{ escondeCPF(tutor.cnpj_cpf) }}
+          </td>
+          <td>
             {{ tutor.telefone }}
           </td>
           <td>
-            {{tutor.email}}
+            {{ tutor.email }}
           </td>
           <td>
             {{ filtraPets(tutor.id) }}
           </td>
-          <td>
-            
-          </td>
           <td class="d-flex align-items-center">
-            <RouterLink :to="`/tutores/${tutor.id}`" class="btn btn-primary"> Visualizar </RouterLink>
-            <button class="btn btn-danger ms-3 p-1" @click="excluirTutor(tutor.id)">Deletar</button>
+            <RouterLink
+              :to="`/tutores/${tutor.id}`"
+              class="btn btn-primary"
+            >
+              Visualizar
+            </RouterLink>
+            <button
+              class="btn btn-danger ms-3"
+              @click="excluirTutor(tutor.id)"
+            >
+              Deletar
+            </button>
           </td>
         </tr>
       </tbody>
