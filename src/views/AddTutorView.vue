@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const API_URL = 'http://localhost:3000';
-  
+
 const route = useRouter();
 const novoTutor = ref({
   nome: '',
@@ -30,27 +30,35 @@ async function salvarTutor() {
       <h1 class="text-2xl font-bold">Cadastro de Tutores</h1>
       <p class="text-body-secondary mb-0">Cadastre um novo tutor no sistema.</p>
     </header>
-    <form v-on:submit.prevent="salvarTutor">
-      <RouterLink
-        @click="salvarTutor()"
-        class="btn btn-primary"
-        :to="{ name: 'addTutor' }"
-      >
-        Adicionar Tutor
-      </RouterLink>
+    <form v-on:submit.prevent="salvarTutor" class="form form-bordered min-w-100">
       <div class="col-md-6">
-        <label
-          class="form-label"
-          for="nome"
-        >
-          Nome:
-        </label>
-        <input
-          type="text"
-          id="nome"
-          class="form-control"
-          v-model="novoTutor.nome"
-        />
+        <div class="row p-2">
+          <div class="col">
+            <label for="id" class="form-label">
+              ID
+            </label>
+            <input
+            type="text"
+            class="form-control bg-light"
+            placeholder="Gerado automaticamente"
+            disabled
+            >
+          </div>
+          <div class="col">
+            <label
+              class="form-label"
+              for="nome"
+            >
+              Nome:
+            </label>
+            <input
+              type="text"
+              id="nome"
+              class="form-control"
+              v-model="novoTutor.nome"
+            />
+          </div>
+        </div>
 
         <label
           class="form-label"

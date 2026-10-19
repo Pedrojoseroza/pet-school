@@ -22,6 +22,18 @@ async function carregarTutorDetails() {
 }
 
 
+async function excluirTutor(id) {
+  const certezaExclusao = window.confirm('Deseja realmente excluir o tutor?');
+  if (certezaExclusao) {
+    await fetch(`${API_URL}/tutores/${id}`, {
+      method: 'DELETE',
+    });
+  }
+  router.push('/tutores')
+
+  await carregarTutorDetails(); //Carrega os dados após a exclusão
+}
+
 onMounted(carregarTutorDetails);
 </script>
 
@@ -93,7 +105,6 @@ onMounted(carregarTutorDetails);
         </div>
       </div>
     </section>
-
     <section class="card shadow-sm mb-4">
       <div class="card-header bg-light">
         <h2 class="h5 mb-0">Endereço</h2>
@@ -182,6 +193,10 @@ onMounted(carregarTutorDetails);
         </tr>
       </tbody>
     </table>
+
+    <button class="btn btn-outline-danger fs-5 mt-4 " @click="excluirTutor(tutor.id)">
+      Remover Tutor
+    </button>
   </div>
 </template>
 
