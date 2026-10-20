@@ -1,0 +1,31 @@
+const estados =  [
+  { uf: 'Acre', value: 'AC' },
+  { uf: 'Alagoas', value: 'AL' },
+  { uf: 'Amapá', value: 'AP' },
+  { uf: 'Amazonas', value: 'AM' },
+  { uf: 'Bahia', value: 'BA' },
+  { uf: 'Ceará', value: 'CE' },
+  { uf: 'Distrito Federal', value: 'DF' },
+  { uf: 'Espírito Santo', value: 'ES' },
+  { uf: 'Goiás', value: 'GO' },
+  { uf: 'Maranhão', value: 'MA' },
+  { uf: 'Mato Grosso', value: 'MT' },
+  { uf: 'Mato Grosso do Sul', value: 'MS' },
+  { uf: 'Minas Gerais', value: 'MG' },
+  { uf: 'Pará', value: 'PA' },
+  { uf: 'Paraíba', value: 'PB' },
+  { uf: 'Paraná', value: 'PR' },
+  { uf: 'Pernambuco', value: 'PE' },
+  { uf: 'Piauí', value: 'PI' },
+  { uf: 'Rio de Janeiro', value: 'RJ' },
+  { uf: 'Rio Grande do Norte', value: 'RN' },
+  { uf: 'Rio Grande do Sul', value: 'RS' },
+  { uf: 'Rondônia', value: 'RO' },
+  { uf: 'Roraima', value: 'RR' },
+  { uf: 'Santa Catarina', value: 'SC' },
+  { uf: 'São Paulo', value: 'SP' },
+  { uf: 'Sergipe', value: 'SE' },
+  { uf: 'Tocantins', value: 'TO' }
+];
+
+export {estados};
