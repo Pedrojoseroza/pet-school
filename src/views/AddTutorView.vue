@@ -42,6 +42,10 @@ const validaForm = () => {
     eValido = false;
     erro.value.cnpj_cpf = 'Este campo está vazio, preenche-o!';
   }
+  if (validarCPF(novoTutor.value.cnpj_cpf)) {
+    eValido = false;
+    erro.value.cnpj_cpf = 'Este valor é inválido!';
+  }
   if (novoTutor.value.telefone.trim() === '') {
     eValido = false;
     erro.value.telefone = 'Este campo está vazio, preenche-o!';
@@ -110,6 +114,40 @@ async function carregaCEP() {
   novoTutor.value.endereco.cidade = dados.localidade;
   novoTutor.value.endereco.estado = dados.uf;
 }
+
+function validarCPF(cpf) {
+  // Remove caracteres não numéricos
+  cpf = cpf.replace(/\D/g, '');
+
+  // Verifica se tem 11 dígitos
+  if (cpf.length !== 11) return false;
+
+  // Rejeita CPFs com todos os números iguais (ex: 111.111.111-11)
+  if (/^(\d)\1+$/.test(cpf)) return false;
+
+  let soma = 0;
+  let resto;
+
+  // Valida 1º dígito verificador
+  for (let i = 1; i <= 9; i++) {
+    soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  }
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+  soma = 0;
+  // Valida 2º dígito verificador
+  for (let i = 1; i <= 10; i++) {
+    soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  }
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+  return true;
+}
+
 </script>
 
 <template>

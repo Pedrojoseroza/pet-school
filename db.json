@@ -35,24 +35,6 @@
   ],
   "pets": [
     {
-      "nome": "asdasd",
-      "especie": "Cachorro",
-      "tutorId": "1",
-      "id": "p-e7bQCWkcs"
-    },
-    {
-      "nome": "Miguel",
-      "especie": "Cachorro",
-      "tutorId": "1",
-      "id": "tm6v8b52sPg"
-    },
-    {
-      "nome": "asdsadasdd",
-      "especie": "Gato",
-      "tutorId": "zlwKgO5IEXE",
-      "id": "suotfyH1WGY"
-    },
-    {
       "nome": "Miguel",
       "especie": "Cachorro",
       "tutorId": "2",
@@ -63,6 +45,18 @@
       "especie": "Cachorro",
       "tutorId": "2",
       "id": "6En39fKo334"
+    },
+    {
+      "nome": "azul",
+      "especie": "Cachorro",
+      "tutorId": "HR2uHtRJ7HE",
+      "id": "eZorqfBJqGM"
+    },
+    {
+      "nome": "Vermelho",
+      "especie": "Cachorro",
+      "tutorId": "HR2uHtRJ7HE",
+      "id": "tpZKT0Z2u8E"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
