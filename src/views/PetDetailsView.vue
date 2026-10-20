@@ -7,6 +7,7 @@ const API_URL = 'http://localhost:3000';
 // exibir informações do pet e do tutor
 const pet = ref({});
 const tutor = ref({});
+const loading = ref(true);
 
 async function carregarPet() {
   // exibindo os dados do Id do Pet
@@ -18,17 +19,24 @@ async function carregarPet() {
 
   const respostaTutor = await fetch(`${API_URL}/tutores/${pet.value.tutorId}`);
   tutor.value = await respostaTutor.json();
+  loading.value = false;
 }
 
 onMounted(carregarPet);
 </script>
 
 <template>
-  <h1>Nome do Pet: {{ pet.nome }}</h1>
-  <p>Espécie: {{ pet.especie }}</p>
-  <p>Nome do Tutor: {{ tutor?.nome }}</p>
+  <h1 v-if="loading">Carregando dados do Pet...</h1>
+  <div
+    class="card"
+    v-else
+  >
+    <h1 class="card-title">Nome do Pet: {{ pet.nome }}</h1>
+    <p>Espécie: {{ pet.especie }}</p>
+    <p>Nome do Tutor: {{ tutor?.nome }}</p>
 
-  <button class="btn btn-default">
-    <RouterLink :to="{ name: 'pets' }"> Voltar </RouterLink>
-  </button>
+    <button class="btn btn-default">
+      <RouterLink :to="{ name: 'pets' }"> Voltar </RouterLink>
+    </button>
+  </div>
 </template>

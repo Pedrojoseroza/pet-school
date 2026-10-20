@@ -1,40 +1,62 @@
 {
   "tutores": [
     {
-      "id": "1",
-      "nome": "Ana",
-      "telefone": "47999990000"
-    },
-    {
       "id": "2",
       "nome": "Carlos",
-      "telefone": "47988880000"
+      "telefone": "47988880000",
+      "cnpj_cpf": "275.425.880-95",
+      "data": "1952-08-26",
+      "email": "carlos.hallo@gmail.com",
+      "endereco": {
+        "cep": "79060600",
+        "rua": "Rua Carinhanha",
+        "bairro": "Vila Santo Eugênio",
+        "cidade": "Campo Grande",
+        "estado": "MS",
+        "numero": "10"
+      }
+    },
+    {
+      "nome": "Pedro José Oliveira da Roza",
+      "telefone": "47984869538",
+      "cnpj_cpf": "097.228.579-24",
+      "email": "pedrojs.ol.daroza@gmail.com",
+      "data": "2003-05-17",
+      "endereco": {
+        "cep": "89215-000",
+        "rua": "Minas Gerais",
+        "bairro": "Joinville",
+        "cidade": "",
+        "estado": "SC",
+        "numero": "5977"
+      },
+      "id": "HR2uHtRJ7HE"
     }
   ],
   "pets": [
     {
-      "id": "2",
-      "nome": "Nino",
-      "especie": "Gato",
-      "tutorId": "1"
-    },
-    {
-      "nome": "asdasd",
-      "especie": "Cachorro",
-      "tutorId": "1",
-      "id": "p-e7bQCWkcs"
-    },
-    {
       "nome": "Miguel",
       "especie": "Cachorro",
-      "tutorId": "1",
-      "id": "tm6v8b52sPg"
+      "tutorId": "2",
+      "id": "jBuQ8cTeIl4"
     },
     {
-      "nome": "asdsadasdd",
-      "especie": "Gato",
-      "tutorId": "zlwKgO5IEXE",
-      "id": "suotfyH1WGY"
+      "nome": "José de Alencar",
+      "especie": "Cachorro",
+      "tutorId": "2",
+      "id": "6En39fKo334"
+    },
+    {
+      "nome": "azul",
+      "especie": "Cachorro",
+      "tutorId": "HR2uHtRJ7HE",
+      "id": "eZorqfBJqGM"
+    },
+    {
+      "nome": "Vermelho",
+      "especie": "Cachorro",
+      "tutorId": "HR2uHtRJ7HE",
+      "id": "tpZKT0Z2u8E"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
