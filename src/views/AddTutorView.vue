@@ -6,7 +6,7 @@ import { estados } from '@/services/global';
 const API_URL = 'http://localhost:3000';
 
 const route = useRouter();
-const novoTutor = ref({
+const estruturaTutor = {
   nome: '',
   telefone: '',
   cnpj_cpf: '',
@@ -20,19 +20,95 @@ const novoTutor = ref({
     estado: '',
     numero: '',
   },
+};
+
+const criaTutorVazio = () => ({
+  ...estruturaTutor,
+  endereco: { ...estruturaTutor.endereco },
 });
 
+const novoTutor = ref(criaTutorVazio());
+const erro = ref(criaTutorVazio());
+
+const validaForm = () => {
+  erro.value = criaTutorVazio();
+  let eValido = true;
+
+  if (novoTutor.value.nome.trim() === '') {
+    eValido = false;
+    erro.value.nome = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.cnpj_cpf.trim() === '') {
+    eValido = false;
+    erro.value.cnpj_cpf = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.telefone.trim() === '') {
+    eValido = false;
+    erro.value.telefone = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.email.trim() === '') {
+    eValido = false;
+    erro.value.email = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.data.trim() === '') {
+    eValido = false;
+    erro.value.data = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.endereco.cep.trim() === '') {
+    eValido = false;
+    erro.value.endereco.cep = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.endereco.numero.trim() === '') {
+    eValido = false;
+    erro.value.endereco.numero = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.endereco.bairro.trim() === '') {
+    eValido = false;
+    erro.value.endereco.bairro = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.endereco.cidade.trim() === '') {
+    eValido = false;
+    erro.value.endereco.cidade = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.endereco.estado.trim() === '') {
+    eValido = false;
+    erro.value.endereco.estado = 'Este campo está vazio, preenche-o!';
+  }
+  if (novoTutor.value.endereco.rua.trim() === '') {
+    eValido = false;
+    erro.value.endereco.rua = 'Este campo está vazio, preenche-o!';
+  }
+  return eValido;
+};
+
 async function salvarTutor() {
-  if (novoTutor.value.nome.trim() !== '') {
+  if (validaForm()) {
     await fetch(`${API_URL}/tutores`, {
       method: 'POST',
-      header: {
+      headers: {
         'Content-type': 'application/json',
       },
       body: JSON.stringify(novoTutor.value),
     });
     route.push('/tutores');
   }
+}
+
+async function carregaCEP() {
+  const cep = novoTutor.value.endereco.cep.trim();
+  if (cep.length !== 8) {
+    return;
+  }
+  const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+  const dados = await resposta.json();
+  if (dados.erro) {
+    erro.value.endereco.cep = 'CEP não encontrado!';
+    return;
+  }
+  novoTutor.value.endereco.rua = dados.logradouro;
+  novoTutor.value.endereco.bairro = dados.bairro;
+  novoTutor.value.endereco.cidade = dados.localidade;
+  novoTutor.value.endereco.estado = dados.uf;
 }
 </script>
 
@@ -45,6 +121,7 @@ async function salvarTutor() {
     <form
       v-on:submit.prevent="salvarTutor"
       class="row"
+      novalidate
     >
       <h4>Dados do Tutor</h4>
       <section class="d-flex border-top border-2 gap-5">
@@ -73,9 +150,17 @@ async function salvarTutor() {
             type="text"
             id="nome"
             class="form-control"
+            :class="{ 'is-invalid': erro.nome }"
             placeholder="Digite o nome completo"
             v-model="novoTutor.nome"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.nome"
+          >
+            {{ erro.nome }}
+          </span>
         </div>
       </section>
       <section class="d-flex gap-5">
@@ -90,14 +175,22 @@ async function salvarTutor() {
             type="text"
             id="cpf"
             class="form-control"
+            :class="{ 'is-invalid': erro.cnpj_cpf }"
             placeholder="Digite seu cpf..."
             v-model="novoTutor.cnpj_cpf"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.cnpj_cpf"
+          >
+            {{ erro.cnpj_cpf }}
+          </span>
         </div>
         <div class="w-100">
           <label
-            class="form-label"
             for="telefone"
+            class="form-label"
           >
             Telefone/Whatsapp:
           </label>
@@ -105,8 +198,16 @@ async function salvarTutor() {
             type="text"
             id="telefone"
             class="form-control"
+            :class="{ 'is-invalid': erro.telefone }"
             v-model="novoTutor.telefone"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.telefone"
+          >
+            {{ erro.telefone }}
+          </span>
         </div>
       </section>
 
@@ -122,14 +223,22 @@ async function salvarTutor() {
             type="email"
             id="email"
             class="form-control"
+            :class="{ 'is-invalid': erro.email }"
             placeholder="Digite seu email..."
             v-model="novoTutor.email"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.email"
+          >
+            {{ erro.email }}
+          </span>
         </div>
         <div class="w-100">
           <label
-            class="form-label"
             for="data"
+            class="form-label"
           >
             Data de Nascimento:
           </label>
@@ -137,8 +246,16 @@ async function salvarTutor() {
             type="date"
             id="data"
             class="form-control"
+            :class="{ 'is-invalid': erro.data }"
             v-model="novoTutor.data"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.data"
+          >
+            {{ erro.data }}
+          </span>
         </div>
       </section>
 
@@ -146,7 +263,7 @@ async function salvarTutor() {
       <section class="d-flex border-top border-2 gap-5">
         <div class="w-100">
           <label
-            for="CEP"
+            for="cep"
             class="form-label"
           >
             CEP:
@@ -155,9 +272,18 @@ async function salvarTutor() {
             type="text"
             id="cep"
             class="form-control"
+            :class="{ 'is-invalid': erro.endereco.cep }"
             placeholder="Digite seu cep aqui"
             v-model="novoTutor.endereco.cep"
+            @change="carregaCEP()"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.endereco.cep"
+          >
+            {{ erro.endereco.cep }}
+          </span>
         </div>
         <div class="w-50">
           <label
@@ -170,9 +296,17 @@ async function salvarTutor() {
             type="text"
             id="num"
             class="form-control"
+            :class="{ 'is-invalid': erro.endereco.numero }"
             placeholder="Digite o seu número"
             v-model="novoTutor.endereco.numero"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.endereco.numero"
+          >
+            {{ erro.endereco.numero }}
+          </span>
         </div>
       </section>
       <section class="d-flex gap-5">
@@ -187,23 +321,40 @@ async function salvarTutor() {
             type="text"
             id="bairro"
             class="form-control"
+            :class="{ 'is-invalid': erro.endereco.bairro }"
             placeholder="Digite seu bairro"
             v-model="novoTutor.endereco.bairro"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.endereco.bairro"
+          >
+            {{ erro.endereco.bairro }}
+          </span>
         </div>
         <div class="w-100">
           <label
+            for="cidade"
             class="form-label"
-            for="bairro"
           >
             Cidade:
           </label>
           <input
             type="text"
-            id="bairro"
+            id="cidade"
             class="form-control"
-            v-model="novoTutor.endereco.bairro"
+            :class="{ 'is-invalid': erro.endereco.cidade }"
+            placeholder="Digite sua cidade"
+            v-model="novoTutor.endereco.cidade"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.endereco.cidade"
+          >
+            {{ erro.endereco.cidade }}
+          </span>
         </div>
       </section>
 
@@ -219,7 +370,9 @@ async function salvarTutor() {
             id="estado"
             placeholder="Estado"
             class="form-select"
+            :class="{ 'is-invalid': erro.endereco.estado }"
             v-model="novoTutor.endereco.estado"
+            required
           >
             <option
               v-for="uf in estados"
@@ -229,11 +382,17 @@ async function salvarTutor() {
               {{ uf.uf }}
             </option>
           </select>
+          <span
+            class="invalid-feedback"
+            v-show="erro.endereco.estado"
+          >
+            {{ erro.endereco.estado }}
+          </span>
         </div>
         <div class="w-100">
           <label
-            class="form-label"
             for="rua"
+            class="form-label"
           >
             Rua:
           </label>
@@ -241,8 +400,16 @@ async function salvarTutor() {
             type="text"
             id="rua"
             class="form-control"
+            :class="{ 'is-invalid': erro.endereco.rua }"
             v-model="novoTutor.endereco.rua"
+            required
           />
+          <span
+            class="invalid-feedback"
+            v-show="erro.endereco.rua"
+          >
+            {{ erro.endereco.rua }}
+          </span>
         </div>
       </section>
 
@@ -251,7 +418,7 @@ async function salvarTutor() {
         <button
           class="btn btn-primary"
           type="submit"
-          >
+        >
           Cadastrar Tutor
         </button>
       </div>
