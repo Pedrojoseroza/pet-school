@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const API_URL = 'http://localhost:3000';
+const loading = ref(true);
 
 const pets = ref([]);
 const tutores = ref([]);
@@ -17,6 +18,7 @@ async function carregarDados() {
   tutores.value = await respostaTutores.json();
 
   console.log('Tutores:', tutores.value);
+  loading.value = false;
 }
 
 function nomeDoTutor(tutorId) {
@@ -46,7 +48,8 @@ onMounted(carregarDados);
 </script>
 
 <template>
-  <div>
+  <h1 v-if="loading">Carregando Dados...</h1>
+  <div v-else>
     <header class="mb-4">
       <h1 class="text-2xl font-bold">Listagem de Pets</h1>
       <p class="text-body-secondary mb-0">

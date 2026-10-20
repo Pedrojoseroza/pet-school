@@ -5,6 +5,7 @@ const API_URL = 'http://localhost:3000';
 
 const tutores = ref([]);
 const pets = ref([]);
+const loading = ref(true);
 
 async function carregarDados() {
   const respostaPets = await fetch(`${API_URL}/pets`);
@@ -12,11 +13,12 @@ async function carregarDados() {
 
   const respostaTutores = await fetch(`${API_URL}/tutores`);
   tutores.value = await respostaTutores.json();
+  loading.value = false;
 }
 
 const filtraPets = (id) => {
   let tutorPets = pets.value.filter((e) => e.tutorId === id);
-  tutorPets = tutorPets.map(e => e.nome);
+  tutorPets = tutorPets.map((e) => e.nome);
   return tutorPets.join(',  ');
 };
 
@@ -30,11 +32,11 @@ async function excluirTutor(id) {
   await carregarDados(); //Carrega os dados após a exclusão
 }
 
-function escondeCPF(cpf){
+function escondeCPF(cpf) {
   if (cpf.length == 14) {
-    return '***.***.***-**'
+    return '***.***.***-**';
   } else {
-    return '**.***.***/****-**'
+    return '**.***.***/****-**';
   }
 }
 
@@ -42,7 +44,8 @@ onMounted(carregarDados);
 </script>
 
 <template>
-  <div>
+  <h1 v-if="loading">Dados carregando...</h1>
+  <div v-else>
     <header class="mb-4">
       <h1 class="text-2xl font-bold">Listagem dos Tutores</h1>
       <p class="text-body-secondary mb-0">

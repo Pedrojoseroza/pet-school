@@ -1,4 +1,4 @@
-const estados =  [
+const estados = [
   { uf: 'Acre', value: 'AC' },
   { uf: 'Alagoas', value: 'AL' },
   { uf: 'Amapá', value: 'AP' },
@@ -25,7 +25,7 @@ const estados =  [
   { uf: 'Santa Catarina', value: 'SC' },
   { uf: 'São Paulo', value: 'SP' },
   { uf: 'Sergipe', value: 'SE' },
-  { uf: 'Tocantins', value: 'TO' }
+  { uf: 'Tocantins', value: 'TO' },
 ];
 
-export {estados};
+export { estados };

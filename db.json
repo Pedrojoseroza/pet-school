@@ -15,6 +15,22 @@
         "estado": "MS",
         "numero": "10"
       }
+    },
+    {
+      "nome": "Pedro José Oliveira da Roza",
+      "telefone": "47984869538",
+      "cnpj_cpf": "097.228.579-24",
+      "email": "pedrojs.ol.daroza@gmail.com",
+      "data": "2003-05-17",
+      "endereco": {
+        "cep": "89215-000",
+        "rua": "Minas Gerais",
+        "bairro": "Joinville",
+        "cidade": "",
+        "estado": "SC",
+        "numero": "5977"
+      },
+      "id": "HR2uHtRJ7HE"
     }
   ],
   "pets": [

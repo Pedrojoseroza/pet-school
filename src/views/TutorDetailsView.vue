@@ -21,7 +21,6 @@ async function carregarTutorDetails() {
   loading.value = false;
 }
 
-
 async function excluirTutor(id) {
   const certezaExclusao = window.confirm('Deseja realmente excluir o tutor?');
   if (certezaExclusao) {
@@ -29,7 +28,7 @@ async function excluirTutor(id) {
       method: 'DELETE',
     });
   }
-  router.push('/tutores')
+  router.push('/tutores');
 
   await carregarTutorDetails(); //Carrega os dados após a exclusão
 }
@@ -39,9 +38,7 @@ onMounted(carregarTutorDetails);
 
 <template>
   <div v-if="loading">
-    <h1 >
-      Dados Carregando...
-    </h1>
+    <h1>Dados Carregando...</h1>
   </div>
   <div v-else>
     <section class="d-flex align-items-center justify-content-between">
@@ -194,7 +191,10 @@ onMounted(carregarTutorDetails);
       </tbody>
     </table>
 
-    <button class="btn btn-outline-danger fs-5 mt-4 " @click="excluirTutor(tutor.id)">
+    <button
+      class="btn btn-outline-danger fs-5 mt-4"
+      @click="excluirTutor(tutor.id)"
+    >
       Remover Tutor
     </button>
   </div>
